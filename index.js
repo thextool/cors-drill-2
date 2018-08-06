@@ -1,7 +1,7 @@
 var express = require('express')
 var cors = require('cors')
 var app = express()
-var port = parseInt(process.env.PORT || 2000)
+var port = parseInt(process.env.PORT || 8080)
 var instructors = require('./src/instructors')
 app.use(cors())
 app.listen(port, () => {
@@ -24,13 +24,12 @@ app.get('/', (request, response) => {
 app.get('/:id', function (request, response) {
     var record = findById(instructors, request.params.id)
     if (!record){
-        response.status = 404
-        response.json({
+        response.status(404).json({
             error: {
                 message: 'No record found!'
             }
         })
     }
-
+    
     response.json({data: record})
 })
